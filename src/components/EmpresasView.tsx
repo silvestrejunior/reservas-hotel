@@ -17,7 +17,9 @@ import {
   Edit2,
   Trash2,
   ShieldCheck,
-  Building
+  Building,
+  Sparkles,
+  X
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { Database } from '../types/database.types';
@@ -42,6 +44,16 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
   const [filtroFormaPagto, setFiltroFormaPagto] = useState<string>('todos');
   const [modalAberto, setModalAberto] = useState(false);
   const [empresaEditando, setEmpresaEditando] = useState<Empresa | null>(null);
+
+  // Lista de Formas de Pagamento Disponíveis no Sistema (gerenciável dinamicamente)
+  const [formasDisponiveis, setFormasDisponiveis] = useState<string[]>([
+    'faturado_boleto_30d',
+    'faturado_boleto_15d',
+    'pix_faturado',
+    'cartao_credito_corporativo',
+    'deposito_antecipado'
+  ]);
+  const [novaFormaTexto, setNovaFormaTexto] = useState('');
 
   // Formulário Modal de Empresa
   const [cnpj, setCnpj] = useState('');
@@ -73,13 +85,30 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
   // Carregar Empresas
   const carregarEmpresas = async () => {
     setLoading(true);
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('empresas_conveniadas')
       .select('*')
       .order('razao_social', { ascending: true });
 
     if (data) {
       setEmpresas(data);
+
+      // Reúne todas as formas de pagamento existentes em qualquer empresa
+      const todasFormas = new Set([
+        'faturado_boleto_30d',
+        'faturado_boleto_15d',
+        'pix_faturado',
+        'cartao_credito_corporativo',
+        'deposito_antecipado'
+      ]);
+
+      data.forEach(emp => {
+        (emp.formas_pagamento_aceitas || []).forEach(f => {
+          if (f && f.trim()) todasFormas.add(f.trim());
+        });
+      });
+
+      setFormasDisponiveis(Array.from(todasFormas));
     }
     setLoading(false);
   };
@@ -124,6 +153,7 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
     setLimiteCredito('10000');
     setPrazoFaturamento('30');
     setObservacoes('');
+    setNovaFormaTexto('');
     setErroForm(null);
     setModalAberto(true);
   };
@@ -152,18 +182,45 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
     setCidade(end.cidade || '');
     setUf(end.uf || '');
 
-    setFormasPagamento(emp.formas_pagamento_aceitas || ['faturado_boleto_30d']);
+    const formasEmp = emp.formas_pagamento_aceitas || ['faturado_boleto_30d'];
+    setFormasPagamento(formasEmp);
+    setFormasDisponiveis(prev => Array.from(new Set([...prev, ...formasEmp])));
     setLimiteCredito(String(emp.limite_credito || 10000));
     setPrazoFaturamento(String(emp.dias_prazo_faturamento || 30));
     setObservacoes(emp.observacoes_faturamento || '');
+    setNovaFormaTexto('');
     setErroForm(null);
     setModalAberto(true);
   };
 
+  // Alternar seleção de forma de pagamento para a empresa
   const toggleFormaPagamento = (forma: string) => {
     setFormasPagamento(prev => 
       prev.includes(forma) ? prev.filter(f => f !== forma) : [...prev, forma]
     );
+  };
+
+  // Adicionar uma nova forma de pagamento (personalizada)
+  const adicionarNovaForma = (nome: string) => {
+    const limpo = nome.trim();
+    if (!limpo) return;
+
+    if (!formasDisponiveis.includes(limpo)) {
+      setFormasDisponiveis(prev => [...prev, limpo]);
+    }
+    if (!formasPagamento.includes(limpo)) {
+      setFormasPagamento(prev => [...prev, limpo]);
+    }
+    setNovaFormaTexto('');
+  };
+
+  // Remover uma forma de pagamento da lista de opções
+  const removerFormaDaLista = (forma: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    // Remove da seleção atual
+    setFormasPagamento(prev => prev.filter(f => f !== forma));
+    // Remove da lista de disponíveis
+    setFormasDisponiveis(prev => prev.filter(f => f !== forma));
   };
 
   const salvarEmpresa = async (e: React.FormEvent) => {
@@ -194,7 +251,7 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
     }
 
     if (formasPagamento.length === 0) {
-      setErroForm('Selecione pelo menos uma forma de pagamento cadastrada.');
+      setErroForm('Selecione ou adicione pelo menos uma forma de pagamento autorizada.');
       return;
     }
 
@@ -293,12 +350,23 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
 
   const getFormaLabel = (forma: string) => {
     switch (forma) {
-      case 'faturado_boleto_30d': return 'Boleto 30 Dias';
-      case 'faturado_boleto_15d': return 'Boleto 15 Dias';
-      case 'pix_faturado': return 'PIX Faturado';
-      case 'cartao_credito_corporativo': return 'Cartão Corporativo';
-      case 'deposito_antecipado': return 'Depósito Antecipado';
+      case 'faturado_boleto_30d': return 'Boleto 30 Dias (Faturado)';
+      case 'faturado_boleto_15d': return 'Boleto 15 Dias (Faturado)';
+      case 'pix_faturado': return 'PIX Faturado (Consolidado)';
+      case 'cartao_credito_corporativo': return 'Cartão de Crédito Corporativo';
+      case 'deposito_antecipado': return 'Depósito Bancário Antecipado';
       default: return forma;
+    }
+  };
+
+  const getFormaDesc = (forma: string) => {
+    switch (forma) {
+      case 'faturado_boleto_30d': return 'Boleto bancário emitido após o checkout com vencimento em 30d';
+      case 'faturado_boleto_15d': return 'Boleto bancário quinzenal com vencimento em 15 dias';
+      case 'pix_faturado': return 'Chave PIX da empresa para quitação periódica consolidada';
+      case 'cartao_credito_corporativo': return 'Cartão de crédito corporativo para débito das diárias';
+      case 'deposito_antecipado': return 'Transferência bancária direta com comprovante prévio';
+      default: return 'Modalidade de faturamento personalizada cadastrada no sistema';
     }
   };
 
@@ -348,10 +416,11 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
             className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs text-slate-700 font-medium focus:outline-none focus:border-[#107c41]"
           >
             <option value="todos">Todas as Formas</option>
-            <option value="faturado_boleto_30d">Boleto 30 Dias</option>
-            <option value="faturado_boleto_15d">Boleto 15 Dias</option>
-            <option value="pix_faturado">PIX Faturado</option>
-            <option value="cartao_credito_corporativo">Cartão Corporativo</option>
+            {formasDisponiveis.map(forma => (
+              <option key={forma} value={forma}>
+                {getFormaLabel(forma)}
+              </option>
+            ))}
           </select>
         </div>
       </div>
@@ -430,7 +499,7 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
                 {/* Formas de Pagamento Cadastradas */}
                 <div className="space-y-1.5">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                    Formas de Pagamento Aceitas:
+                    Formas de Pagamento Cadastradas ({emp.formas_pagamento_aceitas?.length || 0}):
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {(emp.formas_pagamento_aceitas || []).map((forma, idx) => (
@@ -448,7 +517,7 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
                 {/* Limite de Crédito e Prazo */}
                 <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
                   <div>
-                    <span className="text-[10px] text-slate-400 font-medium">Prazo:</span>
+                    <span className="text-[10px] text-slate-400 font-medium">Prazo Padrão:</span>
                     <p className="font-bold text-slate-700">{emp.dias_prazo_faturamento || 30} dias</p>
                   </div>
                   <div className="text-right">
@@ -485,7 +554,7 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
         </div>
       )}
 
-      {/* 4. Modal de Cadastro Completo do Cartão CNPJ */}
+      {/* 4. Modal de Cadastro Completo do Cartão CNPJ & Formas de Pagamento */}
       {modalAberto && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-white rounded-2xl w-full max-w-3xl shadow-2xl border border-slate-200 my-8 overflow-hidden text-slate-800">
@@ -747,98 +816,119 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
                 </div>
               </div>
 
-              {/* Seção 4: Formas de Pagamento Cadastradas e Limites */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 border-b border-slate-100 pb-1.5">
-                  <CreditCard className="w-4 h-4 text-[#107c41]" />
-                  <h3 className="font-bold text-xs uppercase tracking-wider text-slate-700">
-                    4. Formas de Pagamento Cadastradas da Empresa
-                  </h3>
+              {/* Seção 4: Configuração Dinâmica de Formas de Pagamento Cadastradas */}
+              <div className="space-y-3.5 bg-slate-50/70 p-4 rounded-xl border border-slate-200">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                  <div className="flex items-center gap-2">
+                    <CreditCard className="w-4 h-4 text-[#107c41]" />
+                    <h3 className="font-bold text-xs uppercase tracking-wider text-slate-800">
+                      4. Formas de Pagamento Cadastradas da Empresa
+                    </h3>
+                  </div>
+                  <span className="text-[11px] font-bold text-[#107c41] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    {formasPagamento.length} {formasPagamento.length === 1 ? 'autorizada' : 'autorizadas'}
+                  </span>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <label 
-                    onClick={() => toggleFormaPagamento('faturado_boleto_30d')}
-                    className={`flex items-center gap-2.5 p-3 rounded-xl border cursor-pointer select-none transition-all ${
-                      formasPagamento.includes('faturado_boleto_30d')
-                        ? 'border-[#107c41] bg-emerald-50/50 text-[#107c41]'
-                        : 'border-slate-200 hover:bg-slate-50 text-slate-700'
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={formasPagamento.includes('faturado_boleto_30d')}
-                      onChange={() => {}}
-                      className="w-4 h-4 text-[#107c41] rounded"
-                    />
-                    <div>
-                      <p className="font-bold text-xs">Faturado Boleto 30 Dias</p>
-                      <p className="text-[10px] text-slate-500">Boleto bancário emitido após o checkout com vencimento em 30d</p>
-                    </div>
-                  </label>
+                <p className="text-[11px] text-slate-500">
+                  Marque as formas de pagamento autorizadas para esta empresa. Você pode adicionar novas modalidades personalizadas ou remover as que não utilizar.
+                </p>
 
-                  <label 
-                    onClick={() => toggleFormaPagamento('faturado_boleto_15d')}
-                    className={`flex items-center gap-2.5 p-3 rounded-xl border cursor-pointer select-none transition-all ${
-                      formasPagamento.includes('faturado_boleto_15d')
-                        ? 'border-[#107c41] bg-emerald-50/50 text-[#107c41]'
-                        : 'border-slate-200 hover:bg-slate-50 text-slate-700'
-                    }`}
+                {/* Campo para Adicionar Nova Forma de Pagamento */}
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    placeholder="Adicionar nova forma (ex: Boleto 45 Dias, TED Direta...)"
+                    value={novaFormaTexto}
+                    onChange={(e) => setNovaFormaTexto(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        adicionarNovaForma(novaFormaTexto);
+                      }
+                    }}
+                    className="flex-1 px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-[#107c41] focus:ring-1 focus:ring-[#107c41]"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => adicionarNovaForma(novaFormaTexto)}
+                    className="px-4 py-2 bg-[#107c41] hover:bg-[#0e6d39] text-white font-bold text-xs rounded-lg transition-colors flex items-center gap-1.5 shadow-xs"
                   >
-                    <input
-                      type="checkbox"
-                      checked={formasPagamento.includes('faturado_boleto_15d')}
-                      onChange={() => {}}
-                      className="w-4 h-4 text-[#107c41] rounded"
-                    />
-                    <div>
-                      <p className="font-bold text-xs">Faturado Boleto 15 Dias</p>
-                      <p className="text-[10px] text-slate-500">Boleto bancário quinzenal com vencimento em 15 dias</p>
-                    </div>
-                  </label>
-
-                  <label 
-                    onClick={() => toggleFormaPagamento('pix_faturado')}
-                    className={`flex items-center gap-2.5 p-3 rounded-xl border cursor-pointer select-none transition-all ${
-                      formasPagamento.includes('pix_faturado')
-                        ? 'border-[#107c41] bg-emerald-50/50 text-[#107c41]'
-                        : 'border-slate-200 hover:bg-slate-50 text-slate-700'
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={formasPagamento.includes('pix_faturado')}
-                      onChange={() => {}}
-                      className="w-4 h-4 text-[#107c41] rounded"
-                    />
-                    <div>
-                      <p className="font-bold text-xs">PIX Faturado</p>
-                      <p className="text-[10px] text-slate-500">Chave PIX da empresa para quitação periódica consolidada</p>
-                    </div>
-                  </label>
-
-                  <label 
-                    onClick={() => toggleFormaPagamento('cartao_credito_corporativo')}
-                    className={`flex items-center gap-2.5 p-3 rounded-xl border cursor-pointer select-none transition-all ${
-                      formasPagamento.includes('cartao_credito_corporativo')
-                        ? 'border-[#107c41] bg-emerald-50/50 text-[#107c41]'
-                        : 'border-slate-200 hover:bg-slate-50 text-slate-700'
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={formasPagamento.includes('cartao_credito_corporativo')}
-                      onChange={() => {}}
-                      className="w-4 h-4 text-[#107c41] rounded"
-                    />
-                    <div>
-                      <p className="font-bold text-xs">Cartão de Crédito Corporativo</p>
-                      <p className="text-[10px] text-slate-500">Cartão de crédito da empresa cadastrado para débito das diárias</p>
-                    </div>
-                  </label>
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Adicionar</span>
+                  </button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                {/* Sugestões Rápidas de 1 Clique */}
+                <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Sugestões Rápidas:</span>
+                  {[
+                    'Boleto 45 Dias (Faturado)',
+                    'Faturado 10 Dias',
+                    'TED Bancária Direta',
+                    'Voucher Corporativo'
+                  ].map((sug, sIdx) => (
+                    <button
+                      key={sIdx}
+                      type="button"
+                      onClick={() => adicionarNovaForma(sug)}
+                      className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-white hover:bg-emerald-50 hover:text-[#107c41] text-slate-600 border border-slate-200 transition-colors shadow-2xs"
+                    >
+                      + {sug}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Lista Interativa de Formas de Pagamento (com Checkbox e Botão de Remover) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1">
+                  {formasDisponiveis.map((forma) => {
+                    const isSelected = formasPagamento.includes(forma);
+                    const label = getFormaLabel(forma);
+                    const desc = getFormaDesc(forma);
+
+                    return (
+                      <div 
+                        key={forma}
+                        onClick={() => toggleFormaPagamento(forma)}
+                        className={`group flex items-start justify-between p-3 rounded-xl border cursor-pointer select-none transition-all ${
+                          isSelected
+                            ? 'border-[#107c41] bg-white ring-1 ring-[#107c41]/30 text-slate-800 shadow-xs'
+                            : 'border-slate-200 bg-white/70 hover:bg-white text-slate-600 opacity-75 hover:opacity-100'
+                        }`}
+                      >
+                        <div className="flex items-start gap-2.5 min-w-0 pr-2">
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => {}}
+                            className="mt-0.5 w-4 h-4 text-[#107c41] rounded shrink-0 cursor-pointer"
+                          />
+                          <div className="min-w-0">
+                            <p className={`font-bold text-xs truncate ${isSelected ? 'text-[#107c41]' : 'text-slate-800'}`}>
+                              {label}
+                            </p>
+                            <p className="text-[10px] text-slate-500 line-clamp-1 mt-0.5">
+                              {desc}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Botão de Remover / Excluir da Lista */}
+                        <button
+                          type="button"
+                          onClick={(e) => removerFormaDaLista(forma, e)}
+                          className="p-1 rounded text-slate-300 hover:text-rose-600 hover:bg-rose-50 transition-colors shrink-0"
+                          title={`Remover "${label}"`}
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Limite e Prazo */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-3 border-t border-slate-200/80">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1">
                       Limite de Crédito Aprovado (R$)
@@ -847,7 +937,7 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
                       type="number"
                       value={limiteCredito}
                       onChange={(e) => setLimiteCredito(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-[#107c41] focus:outline-none focus:border-[#107c41]"
+                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-bold text-[#107c41] focus:outline-none focus:border-[#107c41]"
                     />
                   </div>
 
@@ -859,7 +949,7 @@ export const EmpresasView: React.FC<EmpresasViewProps> = ({ onNovaReservaParaEmp
                       type="number"
                       value={prazoFaturamento}
                       onChange={(e) => setPrazoFaturamento(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-800 focus:outline-none focus:border-[#107c41]"
+                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800 focus:outline-none focus:border-[#107c41]"
                     />
                   </div>
                 </div>
