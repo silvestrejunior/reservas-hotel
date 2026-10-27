@@ -344,43 +344,52 @@ export type Database = {
         Row: {
           cpf_cnpj: string | null
           created_at: string | null
+          data_nascimento: string | null
           documento_numero: string | null
           documento_tipo: string | null
           email: string | null
           endereco_completo: Json | null
           id: string
           modelo_veiculo: string | null
+          nacionalidade: string | null
           nome_completo: string
           observacoes_preferencias: string | null
           placa_veiculo: string | null
+          profissao: string | null
           telefone_whatsapp: string | null
         }
         Insert: {
           cpf_cnpj?: string | null
           created_at?: string | null
+          data_nascimento?: string | null
           documento_numero?: string | null
           documento_tipo?: string | null
           email?: string | null
           endereco_completo?: Json | null
           id?: string
           modelo_veiculo?: string | null
+          nacionalidade?: string | null
           nome_completo: string
           observacoes_preferencias?: string | null
           placa_veiculo?: string | null
+          profissao?: string | null
           telefone_whatsapp?: string | null
         }
         Update: {
           cpf_cnpj?: string | null
           created_at?: string | null
+          data_nascimento?: string | null
           documento_numero?: string | null
           documento_tipo?: string | null
           email?: string | null
           endereco_completo?: Json | null
           id?: string
           modelo_veiculo?: string | null
+          nacionalidade?: string | null
           nome_completo?: string
           observacoes_preferencias?: string | null
           placa_veiculo?: string | null
+          profissao?: string | null
           telefone_whatsapp?: string | null
         }
         Relationships: []

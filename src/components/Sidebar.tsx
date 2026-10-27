@@ -12,7 +12,7 @@ import {
   Building2
 } from 'lucide-react';
 
-export type NavTab = 'dashboard' | 'calendario' | 'empresas' | 'pos' | 'governanca' | 'financeiro' | 'rh';
+export type NavTab = 'dashboard' | 'calendario' | 'hospedes' | 'empresas' | 'pos' | 'governanca' | 'financeiro' | 'rh';
 export type UserRole = 'admin' | 'recepcao' | 'financeiro' | 'rh' | 'governanca';
 
 interface SidebarProps {
@@ -40,6 +40,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
       id: 'calendario',
       label: 'Mapa de Reservas',
       icon: <CalendarDays className="w-5 h-5" />,
+    },
+    {
+      id: 'hospedes',
+      label: 'Hóspedes & FNRH',
+      icon: <Users2 className="w-5 h-5" />,
+      badge: 'Cadastro'
     },
     {
       id: 'empresas',

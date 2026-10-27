@@ -10,6 +10,7 @@ import { GovernancaView } from './components/GovernancaView';
 import { NovaReservaModal } from './components/NovaReservaModal';
 import { LancamentoConsumoModal } from './components/LancamentoConsumoModal';
 import { EmpresasView } from './components/EmpresasView';
+import { HospedesView } from './components/HospedesView';
 import { supabase } from './lib/supabase';
 import type { Database } from './types/database.types';
 
@@ -23,6 +24,8 @@ type Quarto = Database['public']['Tables']['quartos']['Row'] & {
     placa_veiculo?: string;
   };
 };
+
+type Hospede = Database['public']['Tables']['hospedes']['Row'];
 
 export function App() {
   const [currentTab, setCurrentTab] = useState<NavTab>('dashboard');
@@ -39,6 +42,7 @@ export function App() {
   const [modalNovaReserva, setModalNovaReserva] = useState(false);
   const [quartoSelecionado, setQuartoSelecionado] = useState<Quarto | null>(null);
   const [empresaPreSelecionadaId, setEmpresaPreSelecionadaId] = useState<string | null>(null);
+  const [hospedePreSelecionado, setHospedePreSelecionado] = useState<Hospede | null>(null);
   const [modalConsumo, setModalConsumo] = useState(false);
 
   // Carrega Quartos e Reservas do Supabase
@@ -229,10 +233,22 @@ export function App() {
             />
           )}
 
+          {currentTab === 'hospedes' && (
+            <HospedesView
+              onNovaReservaParaHospede={(hosp) => {
+                setHospedePreSelecionado(hosp);
+                setQuartoSelecionado(null);
+                setEmpresaPreSelecionadaId(null);
+                setModalNovaReserva(true);
+              }}
+            />
+          )}
+
           {currentTab === 'empresas' && (
             <EmpresasView
               onNovaReservaParaEmpresa={(id) => {
                 setQuartoSelecionado(null);
+                setHospedePreSelecionado(null);
                 setEmpresaPreSelecionadaId(id);
                 setModalNovaReserva(true);
               }}
@@ -267,13 +283,16 @@ export function App() {
           quartosLivres={quartosLivres}
           categorias={categorias}
           empresaPreSelecionadaId={empresaPreSelecionadaId}
+          hospedePreSelecionado={hospedePreSelecionado}
           onClose={() => {
             setModalNovaReserva(false);
             setEmpresaPreSelecionadaId(null);
+            setHospedePreSelecionado(null);
           }}
           onSuccess={() => {
             setModalNovaReserva(false);
             setEmpresaPreSelecionadaId(null);
+            setHospedePreSelecionado(null);
             carregarDadosHoteleiros();
           }}
         />
