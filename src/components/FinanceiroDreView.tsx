@@ -143,28 +143,28 @@ export const FinanceiroDreView: React.FC = () => {
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       {/* Abas Superiores */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div className="flex items-center justify-between border-b border-slate-200 pb-3">
         <div className="flex items-center gap-2">
           <button
             onClick={() => setAbaAtiva('dre')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-              abaAtiva === 'dre' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white'
+            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+              abaAtiva === 'dre' ? 'bg-emerald-50 text-[#107c41] border border-emerald-200 shadow-2xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
             <BarChart3 className="w-4 h-4" /> DRE Gerencial do Hotel
           </button>
           <button
             onClick={() => setAbaAtiva('contas')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-              abaAtiva === 'contas' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white'
+            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+              abaAtiva === 'contas' ? 'bg-emerald-50 text-[#107c41] border border-emerald-200 shadow-2xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
             <Wallet className="w-4 h-4" /> Contas a Pagar & Receber ({contas.length})
           </button>
           <button
             onClick={() => setAbaAtiva('caixa')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-              abaAtiva === 'caixa' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white'
+            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+              abaAtiva === 'caixa' ? 'bg-emerald-50 text-[#107c41] border border-emerald-200 shadow-2xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
             <DollarSign className="w-4 h-4" /> Fechamento de Caixa do Turno
@@ -172,16 +172,16 @@ export const FinanceiroDreView: React.FC = () => {
         </div>
 
         {abaAtiva === 'dre' && (
-          <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-xl p-1 text-xs">
+          <div className="flex items-center gap-2 bg-slate-100 border border-slate-200 rounded-lg p-1 text-xs">
             <button
               onClick={() => setPeriodo('mes_atual')}
-              className={`px-3 py-1 rounded-lg font-semibold ${periodo === 'mes_atual' ? 'bg-blue-600 text-white' : 'text-slate-400'}`}
+              className={`px-3 py-1 rounded-md font-semibold transition-all ${periodo === 'mes_atual' ? 'bg-white text-[#107c41] shadow-2xs' : 'text-slate-600'}`}
             >
               Mês Corrente (Outubro/2026)
             </button>
             <button
               onClick={() => setPeriodo('ano_atual')}
-              className={`px-3 py-1 rounded-lg font-semibold ${periodo === 'ano_atual' ? 'bg-blue-600 text-white' : 'text-slate-400'}`}
+              className={`px-3 py-1 rounded-md font-semibold transition-all ${periodo === 'ano_atual' ? 'bg-white text-[#107c41] shadow-2xs' : 'text-slate-600'}`}
             >
               Acumulado Anual
             </button>
@@ -194,198 +194,198 @@ export const FinanceiroDreView: React.FC = () => {
         <div className="space-y-6">
           {/* Cartões de Indicadores Chave */}
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-            <div className="glass-panel p-4 rounded-2xl border-emerald-500/20 bg-emerald-950/10">
-              <span className="text-xs text-slate-400 font-semibold">Receita Líquida</span>
-              <p className="text-2xl font-black text-white mt-1">R$ {receitaLiquida.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-              <div className="text-[11px] text-emerald-400 font-medium flex items-center gap-1 mt-1">
+            <div className="bg-white p-4 rounded-xl border border-emerald-200/90 shadow-sm">
+              <span className="text-xs text-slate-500 font-semibold">Receita Líquida</span>
+              <p className="text-2xl font-black text-slate-900 mt-1">R$ {receitaLiquida.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+              <div className="text-[11px] text-[#107c41] font-bold flex items-center gap-1 mt-1">
                 <ArrowUpRight className="w-3.5 h-3.5" /> +14.2% vs mês anterior
               </div>
             </div>
 
-            <div className="glass-panel p-4 rounded-2xl border-blue-500/20 bg-blue-950/10">
-              <span className="text-xs text-slate-400 font-semibold">Lucro Bruto (Margem)</span>
-              <p className="text-2xl font-black text-blue-400 mt-1">R$ {lucroBruto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-              <div className="text-[11px] text-slate-300 font-bold mt-1">
+            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-xs text-slate-500 font-semibold">Lucro Bruto (Margem)</span>
+              <p className="text-2xl font-black text-[#107c41] mt-1">R$ {lucroBruto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+              <div className="text-[11px] text-slate-600 font-bold mt-1">
                 {margemBrutaPercent.toFixed(1)}% Margem Bruta
               </div>
             </div>
 
-            <div className="glass-panel p-4 rounded-2xl border-purple-500/20 bg-purple-950/10">
-              <span className="text-xs text-slate-400 font-semibold">EBITDA Gerencial</span>
-              <p className="text-2xl font-black text-purple-300 mt-1">R$ {ebitda.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-              <div className="text-[11px] text-purple-400 font-semibold mt-1">
-                {margemEbitdaPercent.toFixed(1)}% de margem operacional
+            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-xs text-slate-500 font-semibold">EBITDA Gerencial</span>
+              <p className="text-2xl font-black text-slate-900 mt-1">R$ {ebitda.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+              <div className="text-[11px] text-slate-600 font-semibold mt-1">
+                {margemEbitdaPercent.toFixed(1)}% margem operacional
               </div>
             </div>
 
-            <div className="glass-panel p-4 rounded-2xl border-teal-500/30 bg-teal-950/20">
-              <span className="text-xs text-teal-300 font-semibold">Lucro Líquido Real</span>
-              <p className="text-2xl font-black text-emerald-400 mt-1">R$ {lucroLiquidoReal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-              <div className="text-[11px] text-emerald-300 font-bold mt-1">
+            <div className="bg-white p-4 rounded-xl border border-emerald-300 shadow-sm">
+              <span className="text-xs text-[#107c41] font-bold">Lucro Líquido Real</span>
+              <p className="text-2xl font-black text-[#107c41] mt-1">R$ {lucroLiquidoReal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+              <div className="text-[11px] text-[#107c41] font-bold mt-1">
                 {margemLiquidaPercent.toFixed(1)}% Margem Líquida Real
               </div>
             </div>
           </div>
 
           {/* Estrutura Detalhada do DRE */}
-          <div className="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
-            <div className="p-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
               <div>
-                <h3 className="font-extrabold text-sm text-white">Demonstrativo de Resultados do Exercício (DRE)</h3>
-                <p className="text-xs text-slate-400">Apuração gerencial de receitas de hospedagem, balcão, custos e despesas</p>
+                <h3 className="font-extrabold text-sm text-slate-900">Demonstrativo de Resultados do Exercício (DRE)</h3>
+                <p className="text-xs text-slate-500">Apuração gerencial de receitas de hospedagem, balcão, custos e despesas</p>
               </div>
               <button
                 onClick={() => window.print()}
-                className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-300 shadow-2xs flex items-center gap-1.5"
               >
-                <FileSpreadsheet className="w-3.5 h-3.5 text-blue-400" /> Exportar / Imprimir DRE
+                <FileSpreadsheet className="w-3.5 h-3.5 text-[#107c41]" /> Exportar / Imprimir DRE
               </button>
             </div>
 
-            <div className="divide-y divide-slate-800/80 text-xs">
+            <div className="divide-y divide-slate-200 text-xs">
               {/* 1. RECEITA OPERACIONAL BRUTA */}
-              <div className="p-3.5 bg-slate-900/40">
-                <div className="flex items-center justify-between font-bold text-white">
-                  <span className="flex items-center gap-2 text-blue-400">
+              <div className="p-3.5 bg-slate-50/50">
+                <div className="flex items-center justify-between font-bold text-slate-900">
+                  <span className="flex items-center gap-2 text-[#107c41]">
                     <ArrowUpRight className="w-4 h-4" /> (+) 1. RECEITA OPERACIONAL BRUTA
                   </span>
-                  <span className="text-sm">R$ {receitaBrutaTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                  <span className="text-sm font-extrabold text-slate-900">R$ {receitaBrutaTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                 </div>
-                <div className="pl-6 pt-2 space-y-1 text-slate-400 text-[11px]">
+                <div className="pl-6 pt-2 space-y-1 text-slate-600 text-[11px]">
                   <div className="flex justify-between">
                     <span>1.01 Receita de Diárias / Hospedagem (32 UHs)</span>
-                    <span className="font-mono text-slate-200">R$ {receitaDiarias.toFixed(2)}</span>
+                    <span className="font-mono text-slate-800 font-semibold">R$ {receitaDiarias.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>1.02 Receita de Vendas de Balcão e Frigobar (PDV)</span>
-                    <span className="font-mono text-slate-200">R$ {receitaBalcao.toFixed(2)}</span>
+                    <span className="font-mono text-slate-800 font-semibold">R$ {receitaBalcao.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>1.03 Receita de Serviços (Lavanderia e Estacionamento)</span>
-                    <span className="font-mono text-slate-200">R$ {receitaServicos.toFixed(2)}</span>
+                    <span className="font-mono text-slate-800 font-semibold">R$ {receitaServicos.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
 
               {/* 2. DEDUÇÕES */}
-              <div className="p-3.5 bg-slate-950/20">
-                <div className="flex items-center justify-between font-bold text-rose-400">
+              <div className="p-3.5 bg-white">
+                <div className="flex items-center justify-between font-bold text-rose-700">
                   <span>(-) 2. DEDUÇÕES DA RECEITA BRUTA</span>
                   <span>- R$ {deducoesTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                 </div>
-                <div className="pl-6 pt-2 space-y-1 text-slate-400 text-[11px]">
+                <div className="pl-6 pt-2 space-y-1 text-slate-600 text-[11px]">
                   <div className="flex justify-between">
                     <span>2.01 Descontos Concedidos e Cancelamentos</span>
-                    <span className="font-mono text-slate-300">- R$ {deducoesDescontos.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {deducoesDescontos.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>2.02 Comissões de Plataformas / OTAs (Booking, etc.)</span>
-                    <span className="font-mono text-slate-300">- R$ {comissoesOTAs.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {comissoesOTAs.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
 
               {/* RECEITA LÍQUIDA */}
-              <div className="p-3.5 bg-blue-950/20 font-black text-white flex justify-between">
-                <span className="text-blue-300">(=) RECEITA OPERACIONAL LÍQUIDA</span>
-                <span className="text-sm text-blue-300">R$ {receitaLiquida.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+              <div className="p-3.5 bg-emerald-50 border-y border-emerald-200 font-black text-slate-900 flex justify-between">
+                <span className="text-[#107c41]">(=) RECEITA OPERACIONAL LÍQUIDA</span>
+                <span className="text-sm text-[#107c41]">R$ {receitaLiquida.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
               </div>
 
               {/* 3. CUSTOS DOS SERVIÇOS (CSP) */}
-              <div className="p-3.5 bg-slate-950/20">
-                <div className="flex items-center justify-between font-bold text-amber-400">
+              <div className="p-3.5 bg-white">
+                <div className="flex items-center justify-between font-bold text-amber-800">
                   <span>(-) 3. CUSTO DOS SERVIÇOS PRESTADOS (CSP / Variáveis)</span>
                   <span>- R$ {cspTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                 </div>
-                <div className="pl-6 pt-2 space-y-1 text-slate-400 text-[11px]">
+                <div className="pl-6 pt-2 space-y-1 text-slate-600 text-[11px]">
                   <div className="flex justify-between">
                     <span>3.01 Insumos do Café da Manhã e Alimentos</span>
-                    <span className="font-mono text-slate-300">- R$ {custoCafeManha.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {custoCafeManha.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>3.02 Custo de Mercadorias Vendidas no Balcão/Frigobar (CMV)</span>
-                    <span className="font-mono text-slate-300">- R$ {cmvBalcaoFrigobar.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {cmvBalcaoFrigobar.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>3.03 Lavanderia Terceirizada e Amenities</span>
-                    <span className="font-mono text-slate-300">- R$ {lavanderiaAmenities.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {lavanderiaAmenities.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
 
               {/* LUCRO BRUTO */}
-              <div className="p-3.5 bg-emerald-950/20 font-black text-white flex justify-between">
-                <span className="text-emerald-400">(=) LUCRO BRUTO (Margem de Contribuição Hoteleira)</span>
-                <span className="text-sm text-emerald-400">R$ {lucroBruto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} ({margemBrutaPercent.toFixed(1)}%)</span>
+              <div className="p-3.5 bg-slate-100/70 border-y border-slate-200 font-black text-slate-900 flex justify-between">
+                <span className="text-slate-800">(=) LUCRO BRUTO (Margem de Contribuição Hoteleira)</span>
+                <span className="text-sm text-[#107c41]">R$ {lucroBruto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} ({margemBrutaPercent.toFixed(1)}%)</span>
               </div>
 
               {/* 4. DESPESAS OPERACIONAIS FIXAS */}
-              <div className="p-3.5 bg-slate-950/20">
-                <div className="flex items-center justify-between font-bold text-rose-400">
+              <div className="p-3.5 bg-white">
+                <div className="flex items-center justify-between font-bold text-rose-700">
                   <span>(-) 4. DESPESAS OPERACIONAIS FIXAS</span>
                   <span>- R$ {despesasOperacionaisTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                 </div>
-                <div className="pl-6 pt-2 space-y-1 text-slate-400 text-[11px]">
+                <div className="pl-6 pt-2 space-y-1 text-slate-600 text-[11px]">
                   <div className="flex justify-between">
                     <span>4.01 Despesas com Pessoal & Encargos (Integrado com RH)</span>
-                    <span className="font-mono text-slate-300">- R$ {despesaPessoal.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {despesaPessoal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>4.02 Energia Elétrica</span>
-                    <span className="font-mono text-slate-300">- R$ {despesaEnergia.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {despesaEnergia.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>4.03 Água e Esgoto</span>
-                    <span className="font-mono text-slate-300">- R$ {despesaAgua.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {despesaAgua.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>4.04 Manutenção Predial e Internet</span>
-                    <span className="font-mono text-slate-300">- R$ {despesaInternetManutencao.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {despesaInternetManutencao.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>4.05 Despesas Administrativas e Softwares</span>
-                    <span className="font-mono text-slate-300">- R$ {despesaSistemasAdm.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {despesaSistemasAdm.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
 
               {/* EBITDA */}
-              <div className="p-3.5 bg-purple-950/20 font-black text-white flex justify-between">
-                <span className="text-purple-300">(=) EBITDA / LAJIDA</span>
-                <span className="text-sm text-purple-300">R$ {ebitda.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} ({margemEbitdaPercent.toFixed(1)}%)</span>
+              <div className="p-3.5 bg-slate-100/70 border-y border-slate-200 font-black text-slate-900 flex justify-between">
+                <span className="text-slate-800">(=) EBITDA / LAJIDA</span>
+                <span className="text-sm text-slate-900">R$ {ebitda.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} ({margemEbitdaPercent.toFixed(1)}%)</span>
               </div>
 
               {/* 5. DESPESAS FINANCEIRAS & TRIBUTOS */}
-              <div className="p-3.5 bg-slate-950/20">
-                <div className="flex items-center justify-between font-bold text-rose-400">
+              <div className="p-3.5 bg-white">
+                <div className="flex items-center justify-between font-bold text-rose-700">
                   <span>(-) 5. DESPESAS FINANCEIRAS & TRIBUTOS</span>
                   <span>- R$ {(taxasCartaoMaquininha + tarifasBancarias + impostosSimplesNacional).toFixed(2)}</span>
                 </div>
-                <div className="pl-6 pt-2 space-y-1 text-slate-400 text-[11px]">
+                <div className="pl-6 pt-2 space-y-1 text-slate-600 text-[11px]">
                   <div className="flex justify-between">
                     <span>5.01 Taxas Retidas por Maquininhas de Cartão</span>
-                    <span className="font-mono text-slate-300">- R$ {taxasCartaoMaquininha.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {taxasCartaoMaquininha.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>5.02 Tarifas Bancárias</span>
-                    <span className="font-mono text-slate-300">- R$ {tarifasBancarias.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {tarifasBancarias.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>6.01 Provisão de Impostos (Simples Nacional ~6%)</span>
-                    <span className="font-mono text-slate-300">- R$ {impostosSimplesNacional.toFixed(2)}</span>
+                    <span className="font-mono text-slate-700">- R$ {impostosSimplesNacional.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
 
               {/* LUCRO LÍQUIDO FINAL */}
-              <div className="p-4 bg-gradient-to-r from-emerald-950/40 via-teal-950/40 to-slate-900 border-t-2 border-emerald-500/50 flex items-center justify-between font-black text-white">
+              <div className="p-4 bg-emerald-50 border-t-2 border-[#107c41] flex items-center justify-between font-black text-slate-900">
                 <div className="flex items-center gap-2">
-                  <span className="text-emerald-400 text-sm font-extrabold">(=) LUCRO LÍQUIDO DO EXERCÍCIO</span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  <span className="text-[#107c41] text-sm font-extrabold">(=) LUCRO LÍQUIDO DO EXERCÍCIO</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-100 text-[#107c41] font-bold border border-emerald-300">
                     {margemLiquidaPercent.toFixed(1)}% Margem Líquida
                   </span>
                 </div>
-                <span className="text-xl font-black text-emerald-400">
+                <span className="text-2xl font-black text-[#107c41]">
                   R$ {lucroLiquidoReal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                 </span>
               </div>
@@ -398,18 +398,18 @@ export const FinanceiroDreView: React.FC = () => {
       {abaAtiva === 'contas' && (
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <h3 className="font-bold text-sm text-white">Gestão de Contas a Pagar e a Receber</h3>
+            <h3 className="font-bold text-sm text-slate-900">Gestão de Contas a Pagar e a Receber</h3>
             <button
               onClick={() => setModalNovaConta(true)}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs px-4 py-2 rounded-xl shadow-lg transition-all"
+              className="flex items-center gap-2 bg-[#107c41] hover:bg-[#0e6d39] text-white font-semibold text-xs px-4 py-2 rounded-lg shadow-sm transition-all"
             >
               <Plus className="w-4 h-4" /> Nova Conta
             </button>
           </div>
 
-          <div className="glass-card rounded-2xl border border-slate-800 overflow-hidden">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-900/80 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400">
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <table className="w-full text-left text-xs text-slate-700">
+              <thead className="bg-slate-50 border-b border-slate-200 text-[11px] uppercase tracking-wider text-slate-600 font-bold">
                 <tr>
                   <th className="p-3.5">Tipo</th>
                   <th className="p-3.5">Descrição</th>
@@ -420,30 +420,30 @@ export const FinanceiroDreView: React.FC = () => {
                   <th className="p-3.5 text-right">Ação</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-100">
                 {contas.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="p-8 text-center text-slate-500">
+                    <td colSpan={7} className="p-8 text-center text-slate-400">
                       Nenhuma conta cadastrada. Clique em "Nova Conta" para lançar energia, internet, etc.
                     </td>
                   </tr>
                 ) : (
                   contas.map(c => (
-                    <tr key={c.id} className="hover:bg-slate-800/40 transition-colors">
+                    <tr key={c.id} className="hover:bg-slate-50 transition-colors">
                       <td className="p-3.5">
                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                          c.tipo === 'pagar' ? 'bg-rose-500/15 text-rose-400 border border-rose-500/30' : 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+                          c.tipo === 'pagar' ? 'bg-rose-50 text-rose-700 border border-rose-200' : 'bg-emerald-50 text-[#107c41] border border-emerald-200'
                         }`}>
                           {c.tipo === 'pagar' ? 'A Pagar' : 'A Receber'}
                         </span>
                       </td>
-                      <td className="p-3.5 font-bold text-white">{c.descricao}</td>
-                      <td className="p-3.5 text-slate-300">{c.fornecedor_cliente || '-'}</td>
-                      <td className="p-3.5 text-slate-300">{c.data_vencimento}</td>
-                      <td className="p-3.5 font-bold text-white">R$ {Number(c.valor_nominal).toFixed(2)}</td>
+                      <td className="p-3.5 font-bold text-slate-900">{c.descricao}</td>
+                      <td className="p-3.5 text-slate-600">{c.fornecedor_cliente || '-'}</td>
+                      <td className="p-3.5 text-slate-600">{c.data_vencimento}</td>
+                      <td className="p-3.5 font-bold text-slate-900">R$ {Number(c.valor_nominal).toFixed(2)}</td>
                       <td className="p-3.5">
-                        <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
-                          c.status === 'pago_recebido' ? 'bg-emerald-500/15 text-emerald-400' : 'bg-amber-500/15 text-amber-400'
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                          c.status === 'pago_recebido' ? 'bg-emerald-50 text-[#107c41] border border-emerald-200' : 'bg-amber-50 text-amber-800 border border-amber-200'
                         }`}>
                           {c.status === 'pago_recebido' ? 'Baixado / Liquidado' : 'Pendente'}
                         </span>
@@ -452,7 +452,7 @@ export const FinanceiroDreView: React.FC = () => {
                         {c.status === 'pendente' && (
                           <button
                             onClick={() => liquidarConta(c.id, Number(c.valor_nominal))}
-                            className="px-2.5 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600 hover:text-white text-emerald-300 text-[11px] font-semibold transition-all border border-emerald-500/30"
+                            className="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-[#107c41] text-[11px] font-bold transition-all border border-emerald-200"
                           >
                             Dar Baixa
                           </button>
@@ -469,35 +469,35 @@ export const FinanceiroDreView: React.FC = () => {
 
       {/* 3. ABA CAIXA */}
       {abaAtiva === 'caixa' && (
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-          <h3 className="font-extrabold text-sm text-white">Fechamento e Conferência de Caixa (Turno Atual)</h3>
-          <p className="text-xs text-slate-400">
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+          <h3 className="font-extrabold text-sm text-slate-900">Fechamento e Conferência de Caixa (Turno Atual)</h3>
+          <p className="text-xs text-slate-500">
             Conferência em tempo real dos valores recebidos no balcão e na recepção por forma de pagamento:
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-2">
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-xs text-slate-400">Dinheiro em Espécie</span>
-              <p className="text-xl font-black text-emerald-400 mt-1">R$ 450,00</p>
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+              <span className="text-xs text-slate-500 font-semibold">Dinheiro em Espécie</span>
+              <p className="text-xl font-black text-[#107c41] mt-1">R$ 450,00</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-xs text-slate-400">Pix Balcão / Recepção</span>
-              <p className="text-xl font-black text-blue-400 mt-1">R$ 1.820,00</p>
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+              <span className="text-xs text-slate-500 font-semibold">Pix Balcão / Recepção</span>
+              <p className="text-xl font-black text-slate-900 mt-1">R$ 1.820,00</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-xs text-slate-400">Cartões Débito / Crédito</span>
-              <p className="text-xl font-black text-purple-400 mt-1">R$ 2.400,00</p>
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+              <span className="text-xs text-slate-500 font-semibold">Cartões Débito / Crédito</span>
+              <p className="text-xl font-black text-slate-900 mt-1">R$ 2.400,00</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900 border border-amber-500/30 bg-amber-950/10">
-              <span className="text-xs text-amber-300">Vales Emitidos (RH)</span>
-              <p className="text-xl font-black text-amber-400 mt-1">R$ 142,00</p>
+            <div className="p-4 rounded-xl bg-amber-50 border border-amber-200">
+              <span className="text-xs text-amber-800 font-semibold">Vales Emitidos (RH)</span>
+              <p className="text-xl font-black text-amber-800 mt-1">R$ 142,00</p>
             </div>
           </div>
 
           <div className="pt-4 flex justify-end">
             <button
               onClick={() => alert('Caixa do turno encerrado com sucesso! Relatório emitido.')}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-blue-600/30"
+              className="px-5 py-2.5 rounded-lg bg-[#107c41] hover:bg-[#0e6d39] text-white font-bold text-xs shadow-sm transition-all"
             >
               Fechar Caixa do Turno
             </button>
@@ -507,71 +507,71 @@ export const FinanceiroDreView: React.FC = () => {
 
       {/* MODAL NOVA CONTA */}
       {modalNovaConta && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="glass-panel w-full max-w-md p-6 rounded-2xl border border-slate-700 shadow-2xl space-y-4">
-            <h3 className="font-extrabold text-base text-white">Lançar Conta a Pagar / Receber</h3>
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-md p-6 rounded-2xl border border-slate-200 shadow-2xl space-y-4">
+            <h3 className="font-extrabold text-base text-slate-900">Lançar Conta a Pagar / Receber</h3>
             <form onSubmit={salvarConta} className="space-y-3 text-xs">
               <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={() => setTipoConta('pagar')}
-                  className={`flex-1 py-2 rounded-lg font-bold ${tipoConta === 'pagar' ? 'bg-rose-600 text-white' : 'bg-slate-800 text-slate-400'}`}
+                  className={`flex-1 py-2 rounded-lg font-bold border ${tipoConta === 'pagar' ? 'bg-rose-50 text-rose-700 border-rose-300' : 'bg-slate-50 text-slate-600 border-slate-200'}`}
                 >
                   Conta a Pagar
                 </button>
                 <button
                   type="button"
                   onClick={() => setTipoConta('receber')}
-                  className={`flex-1 py-2 rounded-lg font-bold ${tipoConta === 'receber' ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-400'}`}
+                  className={`flex-1 py-2 rounded-lg font-bold border ${tipoConta === 'receber' ? 'bg-emerald-50 text-[#107c41] border-emerald-300' : 'bg-slate-50 text-slate-600 border-slate-200'}`}
                 >
                   Conta a Receber
                 </button>
               </div>
 
               <div>
-                <label className="text-slate-300 font-medium">Descrição *</label>
+                <label className="text-slate-700 font-semibold">Descrição *</label>
                 <input
                   type="text"
                   required
                   value={descricaoConta}
                   onChange={e => setDescricaoConta(e.target.value)}
                   placeholder="ex: Conta de Energia - Enel Outubro"
-                  className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                  className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-300 font-medium">Valor (R$) *</label>
+                  <label className="text-slate-700 font-semibold">Valor (R$) *</label>
                   <input
                     type="number"
                     step="0.01"
                     required
                     value={valorConta}
                     onChange={e => setValorConta(e.target.value)}
-                    className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                    className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-300 font-medium">Vencimento *</label>
+                  <label className="text-slate-700 font-semibold">Vencimento *</label>
                   <input
                     type="date"
                     required
                     value={vencimentoConta}
                     onChange={e => setVencimentoConta(e.target.value)}
-                    className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                    className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-slate-300 font-medium">Fornecedor / Beneficiário</label>
+                <label className="text-slate-700 font-semibold">Fornecedor / Beneficiário</label>
                 <input
                   type="text"
                   value={fornecedorConta}
                   onChange={e => setFornecedorConta(e.target.value)}
                   placeholder="ex: Enel Distribuição"
-                  className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                  className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                 />
               </div>
 
@@ -579,13 +579,13 @@ export const FinanceiroDreView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setModalNovaConta(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 font-semibold"
+                  className="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-lg"
+                  className="px-4 py-2 rounded-lg bg-[#107c41] hover:bg-[#0e6d39] text-white font-semibold shadow-sm"
                 >
                   Confirmar Lançamento
                 </button>

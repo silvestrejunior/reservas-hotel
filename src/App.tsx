@@ -170,7 +170,7 @@ export function App() {
   });
 
   return (
-    <div className="flex min-h-screen bg-slate-950 text-slate-100">
+    <div className="flex min-h-screen bg-[#f8fafc] text-slate-800">
       {/* 1. Barra Lateral */}
       <Sidebar
         currentTab={currentTab}
@@ -216,6 +216,11 @@ export function App() {
             <GanttCalendarView
               quartos={quartos}
               categorias={categorias}
+              onOpenNovaReservaComDados={(quartoId) => {
+                const q = quartos.find(item => item.id === quartoId);
+                setQuartoSelecionado(q || null);
+                setModalNovaReserva(true);
+              }}
             />
           )}
 

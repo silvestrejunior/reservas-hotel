@@ -151,76 +151,76 @@ export const RhView: React.FC = () => {
   const totalValesDoMes = vales.reduce((acc, v) => acc + Number(v.valor), 0);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="p-6 max-w-7xl mx-auto space-y-6 text-slate-800">
       {/* Aviso de Sigilo */}
-      <div className="glass-panel p-4 rounded-2xl border-rose-500/30 bg-rose-950/20 flex items-center justify-between">
+      <div className="bg-rose-50 p-4 rounded-xl border border-rose-200 flex items-center justify-between shadow-2xs">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-rose-500/20 text-rose-400">
+          <div className="p-2.5 rounded-lg bg-rose-100 text-rose-700">
             <ShieldAlert className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="font-extrabold text-sm text-white">Módulo Confidencial de Recursos Humanos</h2>
-            <p className="text-xs text-rose-300">
+            <h2 className="font-extrabold text-sm text-rose-900">Módulo Confidencial de Recursos Humanos</h2>
+            <p className="text-xs text-rose-700">
               Acesso exclusivo da Gerência e RH. Recepção e Governança não têm acesso a salários, atestados ou holerites.
             </p>
           </div>
         </div>
         <button
           onClick={() => setModalNovoFuncionario(true)}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs px-4 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 transition-all"
+          className="flex items-center gap-2 bg-[#107c41] hover:bg-[#0e6d39] text-white font-semibold text-xs px-4 py-2.5 rounded-lg shadow-sm transition-all"
         >
           <Plus className="w-4 h-4" /> Novo Colaborador
         </button>
       </div>
 
       {/* Sub-Abas do RH */}
-      <div className="flex items-center gap-2 border-b border-slate-800 pb-2">
+      <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
         <button
           onClick={() => setSubAba('colaboradores')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+          className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
             subAba === 'colaboradores'
-              ? 'bg-blue-600 text-white shadow-sm'
-              : 'text-slate-400 hover:text-white hover:bg-slate-800/40'
+              ? 'bg-emerald-50 text-[#107c41] border border-emerald-200 shadow-2xs'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
           <Users2 className="w-4 h-4" /> Colaboradores ({funcionarios.length})
         </button>
         <button
           onClick={() => setSubAba('vales')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+          className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
             subAba === 'vales'
-              ? 'bg-blue-600 text-white shadow-sm'
-              : 'text-slate-400 hover:text-white hover:bg-slate-800/40'
+              ? 'bg-emerald-50 text-[#107c41] border border-emerald-200 shadow-2xs'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
           <Receipt className="w-4 h-4" /> Espelho de Vales & Balcão ({vales.length})
         </button>
         <button
           onClick={() => setSubAba('horas_extras')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+          className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
             subAba === 'horas_extras'
-              ? 'bg-blue-600 text-white shadow-sm'
-              : 'text-slate-400 hover:text-white hover:bg-slate-800/40'
+              ? 'bg-emerald-50 text-[#107c41] border border-emerald-200 shadow-2xs'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
           <Clock className="w-4 h-4" /> Horas Extras ({horasExtras.length})
         </button>
         <button
           onClick={() => setSubAba('atestados')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+          className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
             subAba === 'atestados'
-              ? 'bg-blue-600 text-white shadow-sm'
-              : 'text-slate-400 hover:text-white hover:bg-slate-800/40'
+              ? 'bg-emerald-50 text-[#107c41] border border-emerald-200 shadow-2xs'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
           <Stethoscope className="w-4 h-4" /> Atestados Médicos ({atestados.length})
         </button>
         <button
           onClick={() => setSubAba('holerites')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+          className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
             subAba === 'holerites'
-              ? 'bg-blue-600 text-white shadow-sm'
-              : 'text-slate-400 hover:text-white hover:bg-slate-800/40'
+              ? 'bg-emerald-50 text-[#107c41] border border-emerald-200 shadow-2xs'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
           <FileText className="w-4 h-4" /> Holerites & Descontos
@@ -232,46 +232,46 @@ export const RhView: React.FC = () => {
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {funcionarios.length === 0 ? (
-              <div className="col-span-3 py-16 text-center text-slate-500 text-xs">
+              <div className="col-span-3 py-16 text-center text-slate-400 text-xs font-medium">
                 Nenhum colaborador cadastrado ainda. Clique em "Novo Colaborador" acima.
               </div>
             ) : (
               funcionarios.map(func => (
-                <div key={func.id} className="glass-card p-4 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                <div key={func.id} className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
                   <div>
                     <div className="flex items-start justify-between">
                       <div>
-                        <h3 className="font-bold text-sm text-white">{func.nome_completo}</h3>
-                        <p className="text-xs text-blue-400 font-medium">{func.cargo}</p>
+                        <h3 className="font-bold text-sm text-slate-900">{func.nome_completo}</h3>
+                        <p className="text-xs text-[#107c41] font-semibold">{func.cargo}</p>
                       </div>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-[#107c41] border border-emerald-200">
                         {func.status}
                       </span>
                     </div>
 
-                    <div className="mt-3 py-2 px-3 rounded-xl bg-slate-950/40 border border-slate-800/60 space-y-1 text-xs">
-                      <div className="flex justify-between text-slate-400">
+                    <div className="mt-3 py-2 px-3 rounded-lg bg-slate-50 border border-slate-200/80 space-y-1 text-xs">
+                      <div className="flex justify-between text-slate-500">
                         <span>Departamento:</span>
-                        <span className="text-slate-200 capitalize">{func.departamento}</span>
+                        <span className="text-slate-800 font-semibold capitalize">{func.departamento}</span>
                       </div>
-                      <div className="flex justify-between text-slate-400">
+                      <div className="flex justify-between text-slate-500">
                         <span>CPF:</span>
-                        <span className="font-mono text-slate-300">{func.cpf}</span>
+                        <span className="font-mono text-slate-700">{func.cpf}</span>
                       </div>
-                      <div className="flex justify-between text-slate-400">
+                      <div className="flex justify-between text-slate-500">
                         <span>Salário Base:</span>
-                        <span className="font-bold text-white">R$ {Number(func.salario_base).toFixed(2)}</span>
+                        <span className="font-bold text-slate-900">R$ {Number(func.salario_base).toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between text-slate-400">
+                      <div className="flex justify-between text-slate-500">
                         <span>Limite Vales:</span>
-                        <span className="font-semibold text-amber-400">R$ {Number(func.limite_mensal_vales).toFixed(2)}</span>
+                        <span className="font-bold text-amber-700">R$ {Number(func.limite_mensal_vales).toFixed(2)}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                  <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
                     <span>Admissão: {func.data_admissao}</span>
-                    <span className="text-blue-400 cursor-pointer hover:underline">Ver Histórico</span>
+                    <span className="text-[#107c41] font-bold cursor-pointer hover:underline">Ver Histórico</span>
                   </div>
                 </div>
               ))
@@ -283,19 +283,19 @@ export const RhView: React.FC = () => {
       {/* 2. ABA VALES E ADIANTAMENTOS */}
       {subAba === 'vales' && (
         <div className="space-y-4">
-          <div className="glass-panel p-4 rounded-2xl flex items-center justify-between border-amber-500/20 bg-amber-950/10">
+          <div className="bg-white p-4 rounded-xl border border-amber-200 shadow-sm flex items-center justify-between bg-amber-50/40">
             <div>
-              <span className="text-xs text-amber-300 font-medium">Total de Vales Consumidos no Período</span>
-              <p className="text-2xl font-black text-white mt-1">R$ {totalValesDoMes.toFixed(2)}</p>
+              <span className="text-xs text-amber-900 font-bold">Total de Vales Consumidos no Período</span>
+              <p className="text-2xl font-black text-amber-800 mt-1">R$ {totalValesDoMes.toFixed(2)}</p>
             </div>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-slate-500 max-w-md">
               Esses valores são descontados automaticamente na apuração dos holerites do mês.
             </span>
           </div>
 
-          <div className="glass-card rounded-2xl border border-slate-800 overflow-hidden">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-900/80 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400">
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <table className="w-full text-left text-xs text-slate-700">
+              <thead className="bg-slate-50 border-b border-slate-200 text-[11px] uppercase tracking-wider text-slate-600 font-bold">
                 <tr>
                   <th className="p-3.5">Colaborador</th>
                   <th className="p-3.5">Tipo / Descrição</th>
@@ -305,29 +305,29 @@ export const RhView: React.FC = () => {
                   <th className="p-3.5">Status Desconto</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-100">
                 {vales.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="p-8 text-center text-slate-500">
+                    <td colSpan={6} className="p-8 text-center text-slate-400 font-medium">
                       Nenhum vale emitido no balcão até o momento.
                     </td>
                   </tr>
                 ) : (
                   vales.map(v => (
-                    <tr key={v.id} className="hover:bg-slate-800/40 transition-colors">
-                      <td className="p-3.5 font-bold text-white">
+                    <tr key={v.id} className="hover:bg-slate-50 transition-colors">
+                      <td className="p-3.5 font-bold text-slate-900">
                         {v.funcionario?.nome_completo || 'Colaborador'}
                       </td>
-                      <td className="p-3.5 text-slate-300">{v.descricao}</td>
-                      <td className="p-3.5 text-slate-400">
+                      <td className="p-3.5 text-slate-600">{v.descricao}</td>
+                      <td className="p-3.5 text-slate-500">
                         {v.data_solicitacao ? new Date(v.data_solicitacao).toLocaleString('pt-BR') : '-'}
                       </td>
-                      <td className="p-3.5 font-bold text-amber-400">
+                      <td className="p-3.5 font-bold text-amber-800">
                         R$ {Number(v.valor).toFixed(2)}
                       </td>
-                      <td className="p-3.5 text-slate-300">{v.mes_competencia}/{v.ano_competencia}</td>
+                      <td className="p-3.5 text-slate-600">{v.mes_competencia}/{v.ano_competencia}</td>
                       <td className="p-3.5">
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
                           {v.status_desconto === 'pendente_desconto' ? 'Pendente Folha' : 'Descontado'}
                         </span>
                       </td>
@@ -346,7 +346,7 @@ export const RhView: React.FC = () => {
           <div className="flex justify-end">
             <button
               onClick={() => setModalNovoAtestado(true)}
-              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs px-4 py-2 rounded-xl shadow-lg transition-all"
+              className="flex items-center gap-2 bg-[#107c41] hover:bg-[#0e6d39] text-white font-semibold text-xs px-4 py-2 rounded-lg shadow-sm transition-all"
             >
               <Plus className="w-4 h-4" /> Registrar Atestado Médico
             </button>
@@ -354,25 +354,25 @@ export const RhView: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {atestados.length === 0 ? (
-              <div className="col-span-2 py-16 text-center text-slate-500 text-xs">
+              <div className="col-span-2 py-16 text-center text-slate-400 text-xs font-medium">
                 Nenhum atestado médico registrado.
               </div>
             ) : (
               atestados.map(at => (
-                <div key={at.id} className="glass-card p-4 rounded-2xl border border-slate-800 space-y-3">
+                <div key={at.id} className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
                   <div className="flex items-start justify-between">
                     <div>
-                      <h4 className="font-bold text-sm text-white">{at.funcionario?.nome_completo}</h4>
-                      <p className="text-xs text-rose-400 font-semibold flex items-center gap-1 mt-0.5">
-                        <Stethoscope className="w-3.5 h-3.5" /> Afastamento: {at.dias_afastamento} dias (CID {at.cid_codigo})
+                      <h4 className="font-bold text-sm text-slate-900">{at.funcionario?.nome_completo}</h4>
+                      <p className="text-xs text-rose-700 font-semibold flex items-center gap-1 mt-0.5">
+                        <Stethoscope className="w-3.5 h-3.5 text-rose-600" /> Afastamento: {at.dias_afastamento} dias (CID {at.cid_codigo})
                       </p>
                     </div>
-                    <span className="text-xs px-2.5 py-1 rounded-lg bg-blue-500/15 text-blue-300 font-bold border border-blue-500/30">
+                    <span className="text-xs px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 font-bold border border-blue-200">
                       Retorno: {at.data_retorno_prevista}
                     </span>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-slate-950/40 border border-slate-800 text-xs text-slate-400 flex justify-between">
+                  <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-600 flex justify-between">
                     <span>Início: <strong>{at.data_inicio_afastamento}</strong></span>
                     <span>Médico: <strong>{at.medico_nome}</strong></span>
                   </div>
@@ -386,13 +386,13 @@ export const RhView: React.FC = () => {
       {/* 4. ABA HOLERITES E DESCONTOS */}
       {subAba === 'holerites' && (
         <div className="space-y-4">
-          <div className="glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
-            <h3 className="font-bold text-sm text-white">Espelho Prévia da Folha de Pagamento (Mês Atual)</h3>
-            <p className="text-xs text-slate-400">
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+            <h3 className="font-bold text-sm text-slate-900">Espelho Prévia da Folha de Pagamento (Mês Atual)</h3>
+            <p className="text-xs text-slate-500">
               Cálculo automático deduzindo os vales e adiantamentos de cada colaborador:
             </p>
 
-            <div className="divide-y divide-slate-800 pt-2">
+            <div className="divide-y divide-slate-100 pt-2">
               {funcionarios.map(f => {
                 const valesFunc = vales.filter(v => v.funcionario_id === f.id);
                 const totalValesFunc = valesFunc.reduce((acc, v) => acc + Number(v.valor), 0);
@@ -401,22 +401,22 @@ export const RhView: React.FC = () => {
                 return (
                   <div key={f.id} className="py-3 flex items-center justify-between text-xs">
                     <div>
-                      <span className="font-bold text-white text-sm">{f.nome_completo}</span>
-                      <p className="text-[11px] text-slate-400">{f.cargo} - Salário Base: R$ {Number(f.salario_base).toFixed(2)}</p>
+                      <span className="font-bold text-slate-900 text-sm">{f.nome_completo}</span>
+                      <p className="text-[11px] text-slate-500">{f.cargo} - Salário Base: R$ {Number(f.salario_base).toFixed(2)}</p>
                     </div>
 
                     <div className="flex items-center gap-6">
                       <div className="text-right">
-                        <span className="text-[11px] text-slate-400">Vales Balcão:</span>
-                        <p className="font-bold text-amber-400">- R$ {totalValesFunc.toFixed(2)}</p>
+                        <span className="text-[11px] text-slate-500">Vales Balcão:</span>
+                        <p className="font-bold text-amber-800">- R$ {totalValesFunc.toFixed(2)}</p>
                       </div>
 
-                      <div className="text-right pl-4 border-l border-slate-800">
-                        <span className="text-[11px] text-slate-400">Líquido a Pagar:</span>
-                        <p className="font-extrabold text-sm text-emerald-400">R$ {salarioLiquido.toFixed(2)}</p>
+                      <div className="text-right pl-4 border-l border-slate-200">
+                        <span className="text-[11px] text-slate-500">Líquido a Pagar:</span>
+                        <p className="font-extrabold text-sm text-[#107c41]">R$ {salarioLiquido.toFixed(2)}</p>
                       </div>
 
-                      <button className="px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600 hover:text-white text-blue-300 font-semibold text-xs border border-blue-500/30 transition-all">
+                      <button className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-[#107c41] font-semibold text-xs border border-emerald-200 transition-all">
                         Gerar Holerite PDF
                       </button>
                     </div>
@@ -430,77 +430,77 @@ export const RhView: React.FC = () => {
 
       {/* MODAL NOVO COLABORADOR */}
       {modalNovoFuncionario && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="glass-panel w-full max-w-md p-6 rounded-2xl border border-slate-700 shadow-2xl space-y-4">
-            <h3 className="font-extrabold text-base text-white">Cadastrar Novo Colaborador</h3>
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-md p-6 rounded-2xl border border-slate-200 shadow-2xl space-y-4">
+            <h3 className="font-extrabold text-base text-slate-900">Cadastrar Novo Colaborador</h3>
             <form onSubmit={salvarFuncionario} className="space-y-3 text-xs">
               <div>
-                <label className="text-slate-300 font-medium">Nome Completo *</label>
+                <label className="text-slate-700 font-semibold">Nome Completo *</label>
                 <input
                   type="text"
                   required
                   value={nomeCompleto}
                   onChange={e => setNomeCompleto(e.target.value)}
                   placeholder="ex: Maria da Silva"
-                  className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                  className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-300 font-medium">CPF *</label>
+                  <label className="text-slate-700 font-semibold">CPF *</label>
                   <input
                     type="text"
                     required
                     value={cpf}
                     onChange={e => setCpf(e.target.value)}
                     placeholder="000.000.000-00"
-                    className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                    className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-300 font-medium">Cargo *</label>
+                  <label className="text-slate-700 font-semibold">Cargo *</label>
                   <input
                     type="text"
                     required
                     value={cargo}
                     onChange={e => setCargo(e.target.value)}
                     placeholder="ex: Recepcionista"
-                    className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                    className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-300 font-medium">Salário Base (R$) *</label>
+                  <label className="text-slate-700 font-semibold">Salário Base (R$) *</label>
                   <input
                     type="number"
                     step="0.01"
                     required
                     value={salarioBase}
                     onChange={e => setSalarioBase(e.target.value)}
-                    className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                    className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-300 font-medium">Limite Vales Balcão (R$)</label>
+                  <label className="text-slate-700 font-semibold">Limite Vales Balcão (R$)</label>
                   <input
                     type="number"
                     step="0.01"
                     value={limiteVales}
                     onChange={e => setLimiteVales(e.target.value)}
-                    className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                    className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-slate-300 font-medium">Departamento</label>
+                <label className="text-slate-700 font-semibold">Departamento</label>
                 <select
                   value={departamento}
                   onChange={e => setDepartamento(e.target.value as any)}
-                  className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                  className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                 >
                   <option value="recepcao">Recepção</option>
                   <option value="governanca">Governança / Camareira</option>
@@ -514,13 +514,13 @@ export const RhView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setModalNovoFuncionario(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 font-semibold"
+                  className="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-lg shadow-blue-600/30"
+                  className="px-4 py-2 rounded-lg bg-[#107c41] hover:bg-[#0e6d39] text-white font-semibold shadow-sm"
                 >
                   Salvar Colaborador
                 </button>
@@ -532,17 +532,17 @@ export const RhView: React.FC = () => {
 
       {/* MODAL REGISTRAR ATESTADO */}
       {modalNovoAtestado && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="glass-panel w-full max-w-md p-6 rounded-2xl border border-slate-700 shadow-2xl space-y-4">
-            <h3 className="font-extrabold text-base text-white">Registrar Atestado Médico</h3>
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-md p-6 rounded-2xl border border-slate-200 shadow-2xl space-y-4">
+            <h3 className="font-extrabold text-base text-slate-900">Registrar Atestado Médico</h3>
             <form onSubmit={salvarAtestado} className="space-y-3 text-xs">
               <div>
-                <label className="text-slate-300 font-medium">Colaborador *</label>
+                <label className="text-slate-700 font-semibold">Colaborador *</label>
                 <select
                   required
                   value={atestadoFuncId}
                   onChange={e => setAtestadoFuncId(e.target.value)}
-                  className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                  className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                 >
                   <option value="">Selecione o colaborador...</option>
                   {funcionarios.map(f => (
@@ -553,47 +553,47 @@ export const RhView: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-300 font-medium">Data Início Afastamento *</label>
+                  <label className="text-slate-700 font-semibold">Data Início Afastamento *</label>
                   <input
                     type="date"
                     required
                     value={atestadoDataInicio}
                     onChange={e => setAtestadoDataInicio(e.target.value)}
-                    className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                    className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-300 font-medium">Qtd Dias *</label>
+                  <label className="text-slate-700 font-semibold">Qtd Dias *</label>
                   <input
                     type="number"
                     min="1"
                     required
                     value={atestadoDias}
                     onChange={e => setAtestadoDias(e.target.value)}
-                    className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                    className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-300 font-medium">Código CID</label>
+                  <label className="text-slate-700 font-semibold">Código CID</label>
                   <input
                     type="text"
                     value={atestadoCid}
                     onChange={e => setAtestadoCid(e.target.value)}
                     placeholder="ex: J06"
-                    className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                    className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-300 font-medium">Médico / CRM</label>
+                  <label className="text-slate-700 font-semibold">Médico / CRM</label>
                   <input
                     type="text"
                     value={atestadoMedico}
                     onChange={e => setAtestadoMedico(e.target.value)}
                     placeholder="ex: Dr. Carlos (CRM 12345)"
-                    className="w-full mt-1 p-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                    className="w-full mt-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
                   />
                 </div>
               </div>
@@ -602,13 +602,13 @@ export const RhView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setModalNovoAtestado(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 font-semibold"
+                  className="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shadow-lg"
+                  className="px-4 py-2 rounded-lg bg-[#107c41] hover:bg-[#0e6d39] text-white font-semibold shadow-sm"
                 >
                   Confirmar Atestado
                 </button>

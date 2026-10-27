@@ -164,19 +164,19 @@ export const PosBalcaoView: React.FC = () => {
   });
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="p-6 max-w-7xl mx-auto space-y-6 text-slate-800">
       {/* Banner de Sucesso */}
       {mensagemSucesso && (
-        <div className="p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center gap-3 animate-fade-in shadow-lg shadow-emerald-950/40">
-          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
-          <span className="font-medium text-sm">{mensagemSucesso}</span>
+        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-[#107c41] flex items-center gap-3 animate-fade-in shadow-sm">
+          <CheckCircle2 className="w-5 h-5 text-[#107c41] shrink-0" />
+          <span className="font-semibold text-sm">{mensagemSucesso}</span>
         </div>
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Catálogo de Produtos (2 Colunas) */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="glass-panel p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3">
+          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3">
             <div className="relative flex-1 min-w-[200px]">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
@@ -184,7 +184,7 @@ export const PosBalcaoView: React.FC = () => {
                 placeholder="Buscar produto por nome..."
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41]"
               />
             </div>
 
@@ -192,7 +192,7 @@ export const PosBalcaoView: React.FC = () => {
               <select
                 value={categoriaFiltro}
                 onChange={(e) => setCategoriaFiltro(e.target.value)}
-                className="text-xs bg-slate-800 border border-slate-700 text-slate-200 rounded-xl px-3 py-2 outline-none"
+                className="text-xs bg-white border border-slate-300 text-slate-700 rounded-lg px-3 py-2 outline-none focus:border-[#107c41] font-medium"
               >
                 <option value="todos">Todas Categorias</option>
                 <option value="frigobar">Frigobar</option>
@@ -208,27 +208,27 @@ export const PosBalcaoView: React.FC = () => {
               <div
                 key={prod.id}
                 onClick={() => adicionarAoCarrinho(prod)}
-                className="glass-card p-3.5 rounded-xl border border-slate-800 hover:border-blue-500/50 hover:bg-slate-800/50 transition-all cursor-pointer group flex flex-col justify-between"
+                className="bg-white p-3.5 rounded-xl border border-slate-200 hover:border-emerald-400 hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between shadow-2xs"
               >
                 <div>
                   <div className="flex items-start justify-between">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 px-1.5 py-0.5 rounded bg-slate-800/80">
+                    <span className="text-[10px] uppercase font-bold text-slate-500 px-1.5 py-0.5 rounded bg-slate-100">
                       {prod.categoria_produto}
                     </span>
-                    <span className={`text-[11px] font-semibold ${prod.estoque_atual > 5 ? 'text-emerald-400' : 'text-amber-400'}`}>
+                    <span className={`text-[11px] font-bold ${prod.estoque_atual > 5 ? 'text-[#107c41]' : 'text-amber-700'}`}>
                       {prod.estoque_atual} un
                     </span>
                   </div>
-                  <h3 className="font-bold text-sm text-white mt-2 group-hover:text-blue-400 transition-colors line-clamp-2">
+                  <h3 className="font-bold text-sm text-slate-800 mt-2 group-hover:text-[#107c41] transition-colors line-clamp-2">
                     {prod.nome}
                   </h3>
                 </div>
 
-                <div className="mt-3 pt-2 border-t border-slate-800/60 flex items-center justify-between">
-                  <span className="text-base font-extrabold text-emerald-400">
+                <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-base font-black text-[#107c41]">
                     R$ {Number(prod.preco_venda).toFixed(2)}
                   </span>
-                  <button className="p-1.5 rounded-lg bg-blue-600/20 text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                  <button className="p-1.5 rounded-lg bg-emerald-50 text-[#107c41] group-hover:bg-[#107c41] group-hover:text-white transition-all">
                     <Plus className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -238,17 +238,17 @@ export const PosBalcaoView: React.FC = () => {
         </div>
 
         {/* Carrinho & Checkout PDV (1 Coluna) */}
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800 flex flex-col justify-between h-fit sticky top-20">
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between h-fit sticky top-20">
           <div>
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-              <h2 className="font-extrabold text-base text-white flex items-center gap-2">
-                <ShoppingCart className="w-5 h-5 text-blue-500" />
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+              <h2 className="font-extrabold text-base text-slate-800 flex items-center gap-2">
+                <ShoppingCart className="w-5 h-5 text-[#107c41]" />
                 Comanda de Balcão
               </h2>
               {carrinho.length > 0 && (
                 <button
                   onClick={() => setCarrinho([])}
-                  className="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1"
+                  className="text-xs text-rose-600 hover:text-rose-700 font-semibold flex items-center gap-1"
                 >
                   <Trash2 className="w-3 h-3" /> Limpar
                 </button>
@@ -256,19 +256,19 @@ export const PosBalcaoView: React.FC = () => {
             </div>
 
             {/* Alternância: Venda Avulsa vs Vale Funcionário */}
-            <div className="mb-4 p-1 bg-slate-950/60 rounded-xl border border-slate-800 flex text-xs">
+            <div className="mb-4 p-1 bg-slate-100 rounded-lg border border-slate-200 flex text-xs">
               <button
                 onClick={() => setTipoVenda('cliente_avulso')}
-                className={`flex-1 py-1.5 rounded-lg font-semibold transition-all ${
-                  tipoVenda === 'cliente_avulso' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+                className={`flex-1 py-1.5 rounded-md font-bold transition-all ${
+                  tipoVenda === 'cliente_avulso' ? 'bg-white text-[#107c41] shadow-2xs' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 Venda Balcão
               </button>
               <button
                 onClick={() => setTipoVenda('vale_funcionario')}
-                className={`flex-1 py-1.5 rounded-lg font-semibold transition-all ${
-                  tipoVenda === 'vale_funcionario' ? 'bg-amber-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+                className={`flex-1 py-1.5 rounded-md font-bold transition-all ${
+                  tipoVenda === 'vale_funcionario' ? 'bg-white text-amber-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 Vale Funcionário
@@ -277,15 +277,15 @@ export const PosBalcaoView: React.FC = () => {
 
             {/* Seletor de Funcionário para Vale */}
             {tipoVenda === 'vale_funcionario' && (
-              <div className="mb-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-2">
-                <label className="text-xs font-semibold text-amber-300 flex items-center gap-1.5">
-                  <UserCheck className="w-3.5 h-3.5" />
+              <div className="mb-4 p-3 rounded-lg bg-amber-50 border border-amber-200 space-y-2">
+                <label className="text-xs font-bold text-amber-900 flex items-center gap-1.5">
+                  <UserCheck className="w-3.5 h-3.5 text-amber-700" />
                   Selecione o Colaborador:
                 </label>
                 <select
                   value={funcionarioSelecionadoId}
                   onChange={(e) => setFuncionarioSelecionadoId(e.target.value)}
-                  className="w-full text-xs bg-slate-900 border border-amber-500/30 text-white rounded-lg p-2 outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full text-xs bg-white border border-amber-300 text-slate-800 rounded-lg p-2 outline-none focus:ring-1 focus:ring-amber-500 font-medium"
                 >
                   <option value="">Selecione o funcionário...</option>
                   {funcionarios.map(f => (
@@ -296,9 +296,9 @@ export const PosBalcaoView: React.FC = () => {
                 </select>
 
                 {funcionarioAtivo && (
-                  <div className="text-[11px] text-slate-300 flex items-center justify-between pt-1 border-t border-amber-500/20">
+                  <div className="text-[11px] text-slate-600 flex items-center justify-between pt-1 border-t border-amber-200">
                     <span>Limite mensal de vales:</span>
-                    <strong className="text-amber-400">R$ {Number(funcionarioAtivo.limite_mensal_vales).toFixed(2)}</strong>
+                    <strong className="text-amber-800 font-bold">R$ {Number(funcionarioAtivo.limite_mensal_vales).toFixed(2)}</strong>
                   </div>
                 )}
               </div>
@@ -307,48 +307,48 @@ export const PosBalcaoView: React.FC = () => {
             {/* Itens do Carrinho */}
             <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
               {carrinho.length === 0 ? (
-                <div className="py-8 text-center text-slate-500 text-xs">
+                <div className="py-8 text-center text-slate-400 text-xs font-medium">
                   Nenhum produto adicionado à comanda.
                 </div>
               ) : (
                 carrinho.map(item => (
                   <div
                     key={item.produto.id}
-                    className="p-2.5 rounded-xl bg-slate-950/40 border border-slate-800/80 flex items-center justify-between text-xs"
+                    className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80 flex items-center justify-between text-xs"
                   >
                     <div className="truncate mr-2">
-                      <p className="font-semibold text-slate-200 truncate">{item.produto.nome}</p>
-                      <p className="text-[11px] text-slate-400">
+                      <p className="font-semibold text-slate-800 truncate">{item.produto.nome}</p>
+                      <p className="text-[11px] text-slate-500">
                         R$ {Number(item.produto.preco_venda).toFixed(2)} cada
                       </p>
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <div className="flex items-center bg-slate-800 rounded-lg border border-slate-700">
+                      <div className="flex items-center bg-white rounded border border-slate-300">
                         <button
                           onClick={() => alterarQuantidade(item.produto.id, -1)}
-                          className="p-1 hover:text-white text-slate-400"
+                          className="p-1 hover:text-slate-900 text-slate-500"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="w-6 text-center font-bold text-white">
+                        <span className="w-6 text-center font-bold text-slate-800">
                           {item.quantidade}
                         </span>
                         <button
                           onClick={() => alterarQuantidade(item.produto.id, 1)}
-                          className="p-1 hover:text-white text-slate-400"
+                          className="p-1 hover:text-slate-900 text-slate-500"
                         >
                           <Plus className="w-3 h-3" />
                         </button>
                       </div>
 
-                      <span className="font-bold text-white w-14 text-right">
+                      <span className="font-bold text-slate-900 w-14 text-right">
                         R$ {(Number(item.produto.preco_venda) * item.quantidade).toFixed(2)}
                       </span>
 
                       <button
                         onClick={() => removerDoCarrinho(item.produto.id)}
-                        className="text-slate-500 hover:text-rose-400 p-1"
+                        className="text-slate-400 hover:text-rose-600 p-1"
                       >
                         <Trash2 className="w-3 h-3" />
                       </button>
@@ -360,10 +360,10 @@ export const PosBalcaoView: React.FC = () => {
           </div>
 
           {/* Rodapé e Fechamento */}
-          <div className="mt-4 pt-4 border-t border-slate-800 space-y-4">
+          <div className="mt-4 pt-4 border-t border-slate-100 space-y-4">
             <div className="flex items-baseline justify-between">
-              <span className="text-xs text-slate-400 font-medium">Total da Venda:</span>
-              <span className="text-2xl font-black text-emerald-400">
+              <span className="text-xs text-slate-500 font-medium">Total da Venda:</span>
+              <span className="text-2xl font-black text-[#107c41]">
                 R$ {totalVenda.toFixed(2)}
               </span>
             </div>
@@ -374,10 +374,10 @@ export const PosBalcaoView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setFormaPagamento('dinheiro')}
-                  className={`p-2 rounded-xl border flex flex-col items-center gap-1 font-medium transition-all ${
+                  className={`p-2 rounded-lg border flex flex-col items-center gap-1 font-semibold transition-all ${
                     formaPagamento === 'dinheiro'
-                      ? 'bg-blue-600/20 border-blue-500 text-blue-300'
-                      : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+                      ? 'bg-emerald-50 border-emerald-400 text-[#107c41]'
+                      : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
                   }`}
                 >
                   <Banknote className="w-4 h-4" /> Dinheiro
@@ -385,10 +385,10 @@ export const PosBalcaoView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setFormaPagamento('pix')}
-                  className={`p-2 rounded-xl border flex flex-col items-center gap-1 font-medium transition-all ${
+                  className={`p-2 rounded-lg border flex flex-col items-center gap-1 font-semibold transition-all ${
                     formaPagamento === 'pix'
-                      ? 'bg-emerald-600/20 border-emerald-500 text-emerald-300'
-                      : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+                      ? 'bg-emerald-50 border-emerald-400 text-[#107c41]'
+                      : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
                   }`}
                 >
                   <QrCode className="w-4 h-4" /> Pix
@@ -396,10 +396,10 @@ export const PosBalcaoView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setFormaPagamento('cartao_credito_vista')}
-                  className={`p-2 rounded-xl border flex flex-col items-center gap-1 font-medium transition-all ${
+                  className={`p-2 rounded-lg border flex flex-col items-center gap-1 font-semibold transition-all ${
                     formaPagamento.startsWith('cartao')
-                      ? 'bg-purple-600/20 border-purple-500 text-purple-300'
-                      : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+                      ? 'bg-emerald-50 border-emerald-400 text-[#107c41]'
+                      : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
                   }`}
                 >
                   <CreditCard className="w-4 h-4" /> Cartão
@@ -410,12 +410,12 @@ export const PosBalcaoView: React.FC = () => {
             <button
               onClick={finalizarVenda}
               disabled={loading || carrinho.length === 0}
-              className={`w-full py-3 rounded-xl font-bold text-sm transition-all shadow-lg flex items-center justify-center gap-2 ${
+              className={`w-full py-3 rounded-lg font-bold text-sm transition-all shadow-sm flex items-center justify-center gap-2 ${
                 carrinho.length === 0
-                  ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                  ? 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
                   : tipoVenda === 'vale_funcionario'
-                  ? 'bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white shadow-amber-900/30'
-                  : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-emerald-900/30'
+                  ? 'bg-amber-600 hover:bg-amber-700 text-white'
+                  : 'bg-[#107c41] hover:bg-[#0e6d39] text-white'
               }`}
             >
               {loading ? (

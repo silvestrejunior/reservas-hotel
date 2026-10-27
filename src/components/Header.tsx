@@ -15,7 +15,7 @@ export const Header: React.FC<HeaderProps> = ({
   currentDateText,
 }) => {
   return (
-    <header className="h-16 px-6 border-b border-slate-800 bg-slate-900/50 backdrop-blur-md flex items-center justify-between sticky top-0 z-20">
+    <header className="h-16 px-6 border-b border-slate-200 bg-white flex items-center justify-between sticky top-0 z-20 shadow-2xs">
       {/* Busca Global */}
       <div className="flex items-center gap-3 w-96">
         <div className="relative w-full">
@@ -25,23 +25,23 @@ export const Header: React.FC<HeaderProps> = ({
             placeholder="Buscar por hóspede, quarto (ex: 104) ou placa..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-slate-800/80 border border-slate-700/80 rounded-xl text-xs text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#107c41] transition-all"
           />
         </div>
       </div>
 
       {/* Ações Rápidas & Data */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         {/* Horário */}
-        <div className="hidden md:flex items-center gap-2 text-xs text-slate-400 bg-slate-800/40 px-3 py-1.5 rounded-lg border border-slate-800">
-          <Clock className="w-3.5 h-3.5 text-blue-400" />
-          <span>{currentDateText}</span>
+        <div className="hidden md:flex items-center gap-2 text-xs text-slate-600 bg-slate-100/80 px-3 py-1.5 rounded-lg border border-slate-200/80">
+          <Clock className="w-3.5 h-3.5 text-[#107c41]" />
+          <span className="font-medium capitalize">{currentDateText}</span>
         </div>
 
         {/* Botão Nova Reserva / Check-in */}
         <button
           onClick={onOpenNovaReserva}
-          className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs px-4 py-2 rounded-xl shadow-lg shadow-blue-600/25 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+          className="flex items-center gap-2 bg-[#107c41] hover:bg-[#0e6d39] active:bg-[#0b5a2f] text-white font-semibold text-xs px-4 py-2.5 rounded-lg shadow-xs hover:shadow transition-all"
         >
           <PlusCircle className="w-4 h-4" />
           <span>Nova Reserva / Check-in</span>
