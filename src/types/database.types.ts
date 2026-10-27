@@ -7,6 +7,11 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.18"
+  }
   public: {
     Tables: {
       categorias_quarto: {
@@ -122,7 +127,7 @@ export type Database = {
           id?: string
           plano_contas_id: string
           status?: Database["public"]["Enums"]["status_conta"]
-          tipo?: Database["public"]["Enums"]["tipo_conta"]
+          tipo: Database["public"]["Enums"]["tipo_conta"]
           valor_desconto?: number | null
           valor_juros_multa?: number | null
           valor_liquidado?: number | null
@@ -154,6 +159,75 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      empresas_conveniadas: {
+        Row: {
+          ativo: boolean | null
+          cnae_principal: string | null
+          cnpj: string
+          contato_responsavel: string | null
+          created_at: string | null
+          data_abertura: string | null
+          dias_prazo_faturamento: number | null
+          email_financeiro_faturamento: string
+          endereco_completo: Json | null
+          formas_pagamento_aceitas: string[] | null
+          id: string
+          inscricao_estadual: string | null
+          inscricao_municipal: string | null
+          limite_credito: number | null
+          nome_fantasia: string | null
+          observacoes_faturamento: string | null
+          razao_social: string
+          situacao_cadastral: string | null
+          telefone_comercial: string
+          telefone_responsavel: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          cnae_principal?: string | null
+          cnpj: string
+          contato_responsavel?: string | null
+          created_at?: string | null
+          data_abertura?: string | null
+          dias_prazo_faturamento?: number | null
+          email_financeiro_faturamento: string
+          endereco_completo?: Json | null
+          formas_pagamento_aceitas?: string[] | null
+          id?: string
+          inscricao_estadual?: string | null
+          inscricao_municipal?: string | null
+          limite_credito?: number | null
+          nome_fantasia?: string | null
+          observacoes_faturamento?: string | null
+          razao_social: string
+          situacao_cadastral?: string | null
+          telefone_comercial: string
+          telefone_responsavel?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          cnae_principal?: string | null
+          cnpj?: string
+          contato_responsavel?: string | null
+          created_at?: string | null
+          data_abertura?: string | null
+          dias_prazo_faturamento?: number | null
+          email_financeiro_faturamento?: string
+          endereco_completo?: Json | null
+          formas_pagamento_aceitas?: string[] | null
+          id?: string
+          inscricao_estadual?: string | null
+          inscricao_municipal?: string | null
+          limite_credito?: number | null
+          nome_fantasia?: string | null
+          observacoes_faturamento?: string | null
+          razao_social?: string
+          situacao_cadastral?: string | null
+          telefone_comercial?: string
+          telefone_responsavel?: string | null
+        }
+        Relationships: []
       }
       fechamento_caixa: {
         Row: {
@@ -525,6 +599,8 @@ export type Database = {
           data_checkin_real: string | null
           data_checkout_previsto: string
           data_checkout_real: string | null
+          empresa_id: string | null
+          forma_pagamento_reserva: string | null
           hospede_principal_id: string
           id: string
           notas_internas: string | null
@@ -534,6 +610,7 @@ export type Database = {
           quarto_id: string | null
           saldo_devedor: number
           status: Database["public"]["Enums"]["status_reserva"]
+          tipo_reserva: string | null
           valor_consumo_total: number
           valor_desconto: number
           valor_diarias_total: number
@@ -548,6 +625,8 @@ export type Database = {
           data_checkin_real?: string | null
           data_checkout_previsto: string
           data_checkout_real?: string | null
+          empresa_id?: string | null
+          forma_pagamento_reserva?: string | null
           hospede_principal_id: string
           id?: string
           notas_internas?: string | null
@@ -557,6 +636,7 @@ export type Database = {
           quarto_id?: string | null
           saldo_devedor?: number
           status?: Database["public"]["Enums"]["status_reserva"]
+          tipo_reserva?: string | null
           valor_consumo_total?: number
           valor_desconto?: number
           valor_diarias_total?: number
@@ -571,6 +651,8 @@ export type Database = {
           data_checkin_real?: string | null
           data_checkout_previsto?: string
           data_checkout_real?: string | null
+          empresa_id?: string | null
+          forma_pagamento_reserva?: string | null
           hospede_principal_id?: string
           id?: string
           notas_internas?: string | null
@@ -580,6 +662,7 @@ export type Database = {
           quarto_id?: string | null
           saldo_devedor?: number
           status?: Database["public"]["Enums"]["status_reserva"]
+          tipo_reserva?: string | null
           valor_consumo_total?: number
           valor_desconto?: number
           valor_diarias_total?: number
@@ -592,6 +675,13 @@ export type Database = {
             columns: ["categoria_id"]
             isOneToOne: false
             referencedRelation: "categorias_quarto"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reservas_empresa_id_fkey"
+            columns: ["empresa_id"]
+            isOneToOne: false
+            referencedRelation: "empresas_conveniadas"
             referencedColumns: ["id"]
           },
           {
@@ -1062,3 +1152,216 @@ export type Database = {
     }
   }
 }
+
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never) = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never) = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  public: {
+    Enums: {
+      categoria_produto: [
+        "frigobar",
+        "bar_restaurante",
+        "lavanderia",
+        "conveniencia",
+        "taxas",
+      ],
+      departamento_funcionario: [
+        "recepcao",
+        "governanca",
+        "manutencao",
+        "financeiro_adm",
+        "gerencia",
+      ],
+      forma_pagamento: [
+        "dinheiro",
+        "pix",
+        "cartao_debito",
+        "cartao_credito_vista",
+        "cartao_credito_parcelado",
+        "vale_folha",
+        "faturado_boleto",
+      ],
+      origem_reserva: [
+        "balcao",
+        "whatsapp",
+        "telefone",
+        "booking",
+        "airbnb",
+        "site_proprio",
+        "empresa",
+      ],
+      percentual_hora_extra: ["50%", "100%_domingo_feriado", "noturno"],
+      status_aprovacao_he: ["pendente", "aprovado", "pago_folha", "rejeitado"],
+      status_caixa: ["aberto", "fechado", "auditado"],
+      status_conta: ["pendente", "pago_recebido", "parcial", "cancelado"],
+      status_desconto_vale: [
+        "pendente_desconto",
+        "descontado_em_folha",
+        "cancelado",
+      ],
+      status_funcionario: ["ativo", "ferias", "afastado_medico", "desligado"],
+      status_limpeza_quarto: [
+        "limpo",
+        "sujo_checkin_pendente",
+        "em_limpeza",
+        "inspecionado",
+      ],
+      status_operacional_quarto: [
+        "livre",
+        "ocupado",
+        "bloqueado_manutencao",
+        "fora_de_servico",
+      ],
+      status_reserva: [
+        "pre_reserva",
+        "confirmada",
+        "hospedado_checkin",
+        "finalizada_checkout",
+        "no_show",
+        "cancelada",
+        "bloqueio",
+      ],
+      tipo_conta: ["pagar", "receber"],
+      tipo_movimentacao_estoque: [
+        "entrada_compra",
+        "saida_consumo_quarto",
+        "saida_venda_balcao",
+        "saida_vale_funcionario",
+        "ajuste_inventario",
+        "perda_quebra",
+      ],
+      tipo_plano_contas: [
+        "receita_operacional",
+        "deducao_receita",
+        "custo_operacional",
+        "despesa_administrativa",
+        "despesa_pessoal",
+        "despesa_manutencao",
+        "despesa_financeira",
+        "tributos",
+      ],
+      tipo_transacao: ["entrada", "saida"],
+      tipo_vale: [
+        "vale_produto_balcao",
+        "adiantamento_salarial_dinheiro",
+        "adiantamento_pix",
+      ],
+      tipo_venda_balcao: ["cliente_avulso", "vale_funcionario"],
+    },
+  },
+} as const

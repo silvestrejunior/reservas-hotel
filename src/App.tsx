@@ -9,6 +9,7 @@ import { FinanceiroDreView } from './components/FinanceiroDreView';
 import { GovernancaView } from './components/GovernancaView';
 import { NovaReservaModal } from './components/NovaReservaModal';
 import { LancamentoConsumoModal } from './components/LancamentoConsumoModal';
+import { EmpresasView } from './components/EmpresasView';
 import { supabase } from './lib/supabase';
 import type { Database } from './types/database.types';
 
@@ -37,6 +38,7 @@ export function App() {
   // Modais
   const [modalNovaReserva, setModalNovaReserva] = useState(false);
   const [quartoSelecionado, setQuartoSelecionado] = useState<Quarto | null>(null);
+  const [empresaPreSelecionadaId, setEmpresaPreSelecionadaId] = useState<string | null>(null);
   const [modalConsumo, setModalConsumo] = useState(false);
 
   // Carrega Quartos e Reservas do Supabase
@@ -185,6 +187,7 @@ export function App() {
         <Header
           onOpenNovaReserva={() => {
             setQuartoSelecionado(null);
+            setEmpresaPreSelecionadaId(null);
             setModalNovaReserva(true);
           }}
           searchTerm={searchTerm}
@@ -200,6 +203,7 @@ export function App() {
               loading={loading}
               onOpenCheckin={(q) => {
                 setQuartoSelecionado(q);
+                setEmpresaPreSelecionadaId(null);
                 setModalNovaReserva(true);
               }}
               onOpenConsumo={(q) => {
@@ -219,6 +223,17 @@ export function App() {
               onOpenNovaReservaComDados={(quartoId) => {
                 const q = quartos.find(item => item.id === quartoId);
                 setQuartoSelecionado(q || null);
+                setEmpresaPreSelecionadaId(null);
+                setModalNovaReserva(true);
+              }}
+            />
+          )}
+
+          {currentTab === 'empresas' && (
+            <EmpresasView
+              onNovaReservaParaEmpresa={(id) => {
+                setQuartoSelecionado(null);
+                setEmpresaPreSelecionadaId(id);
                 setModalNovaReserva(true);
               }}
             />
@@ -251,9 +266,14 @@ export function App() {
           quartoPreSelecionado={quartoSelecionado}
           quartosLivres={quartosLivres}
           categorias={categorias}
-          onClose={() => setModalNovaReserva(false)}
+          empresaPreSelecionadaId={empresaPreSelecionadaId}
+          onClose={() => {
+            setModalNovaReserva(false);
+            setEmpresaPreSelecionadaId(null);
+          }}
           onSuccess={() => {
             setModalNovaReserva(false);
+            setEmpresaPreSelecionadaId(null);
             carregarDadosHoteleiros();
           }}
         />
