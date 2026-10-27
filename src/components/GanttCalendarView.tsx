@@ -655,24 +655,29 @@ export const GanttCalendarView: React.FC<GanttCalendarViewProps> = ({
                 const diaSem = diasSemana[d.getDay()];
                 const mesStr = meses[d.getMonth()];
                 const ocupacao = calcularOcupacaoDia(d);
+                const isFimDeSemana = d.getDay() === 0 || d.getDay() === 6;
 
                 return (
                   <div
                     key={index}
-                    className="w-[58px] shrink-0 p-1 border-r border-slate-200 flex flex-col items-center bg-white"
+                    className={`w-[58px] shrink-0 p-1 border-r border-slate-200 flex flex-col items-center ${
+                      isFimDeSemana ? 'bg-slate-100/90' : 'bg-white'
+                    }`}
                   >
-                    {/* Bloco Escuro do Dia (Hospedin Dark Pill) */}
-                    <div className="w-full bg-[#273a4d] text-white rounded p-1 flex flex-col items-center justify-between shadow-xs">
+                    {/* Bloco Escuro do Dia (Hospedin Dark Pill com destaque nos fins de semana) */}
+                    <div className={`w-full text-white rounded p-1 flex flex-col items-center justify-between shadow-xs transition-colors ${
+                      isFimDeSemana ? 'bg-[#1e2f40] ring-1 ring-amber-400/40' : 'bg-[#273a4d]'
+                    }`}>
                       {/* Linha 1: Dia da semana e % Ocupação */}
                       <div className="w-full flex items-center justify-between text-[9px] font-bold leading-tight px-0.5">
-                        <span className="text-slate-300">{diaSem}</span>
+                        <span className={isFimDeSemana ? 'text-amber-300 font-extrabold' : 'text-slate-300'}>{diaSem}</span>
                         <span className="bg-white text-[#273a4d] px-1 py-0.2 rounded font-black text-[8px]">
                           {ocupacao}%
                         </span>
                       </div>
                       {/* Linha 2: Dia Grande e Mês */}
                       <div className="w-full flex items-baseline justify-between mt-0.5 px-0.5">
-                        <span className="text-base font-black leading-none">{diaNum}</span>
+                        <span className={`text-base font-black leading-none ${isFimDeSemana ? 'text-amber-100' : 'text-white'}`}>{diaNum}</span>
                         <span className="text-[9px] font-bold text-slate-400">{mesStr}</span>
                       </div>
                     </div>
@@ -709,13 +714,16 @@ export const GanttCalendarView: React.FC<GanttCalendarViewProps> = ({
                     {/* Vagas e Tarifas por Dia para a Categoria */}
                     <div className="flex">
                       {dias.map((d, dIdx) => {
+                        const isFimDeSemana = d.getDay() === 0 || d.getDay() === 6;
                         const vagas = calcularVagosCategoriaDia(categoria.id, d);
                         const tarifaFormatada = Number(categoria.tarifa_padrao).toFixed(2).replace('.', ',');
 
                         return (
                           <div
                             key={dIdx}
-                            className="w-[58px] shrink-0 p-1 border-r border-slate-200 flex flex-col items-center justify-center bg-[#f8fafc]"
+                            className={`w-[58px] shrink-0 p-1 border-r border-slate-200 flex flex-col items-center justify-center ${
+                              isFimDeSemana ? 'bg-[#eef2f6]' : 'bg-[#f8fafc]'
+                            }`}
                           >
                             {/* Caixinha de Vagas: [ 0 ] (vermelho) ou [ N ] (verde) */}
                             <span
@@ -780,6 +788,7 @@ export const GanttCalendarView: React.FC<GanttCalendarViewProps> = ({
                         <div className="flex relative">
                           {dias.map((d, dIdx) => {
                             const diaIso = d.toISOString().split('T')[0];
+                            const isFimDeSemana = d.getDay() === 0 || d.getDay() === 6;
 
                             return (
                               <div
@@ -789,8 +798,10 @@ export const GanttCalendarView: React.FC<GanttCalendarViewProps> = ({
                                     onOpenNovaReservaComDados(quarto.id, diaIso);
                                   }
                                 }}
-                                className="w-[58px] shrink-0 border-r border-slate-200 hover:bg-emerald-50/40 cursor-pointer transition-colors relative"
-                                title={`Clique para criar reserva no Quarto ${quarto.numero} em ${diaIso}`}
+                                className={`w-[58px] shrink-0 border-r border-slate-200 hover:bg-emerald-50/50 cursor-pointer transition-colors relative ${
+                                  isFimDeSemana ? 'bg-slate-100/75' : 'bg-white'
+                                }`}
+                                title={`Clique para criar reserva no Quarto ${quarto.numero} em ${diaIso} (${diasSemana[d.getDay()]})`}
                               />
                             );
                           })}
